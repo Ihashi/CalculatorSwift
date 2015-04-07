@@ -80,7 +80,8 @@ class ViewController: UIViewController
     {
         get
         {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            var displayString = display.text!
+            return (displayString as NSString).doubleValue
         }
         set
         {
