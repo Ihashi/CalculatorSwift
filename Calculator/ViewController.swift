@@ -13,7 +13,10 @@ class ViewController: UIViewController
     @IBOutlet weak var display_operation: UILabel!
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var dot: UIButton!
-    @IBOutlet weak var pi: UIButton!
+    
+    var userIsInTheMiddleOfTypingANumber = false
+    
+    let displayPi = M_PI
     
     @IBAction func clear(sender: UIButton)
     {
@@ -22,7 +25,11 @@ class ViewController: UIViewController
         operandStack.removeAll()
     }
     
-    var userIsInTheMiddleOfTypingANumber = false
+    @IBAction func constants(sender: UIButton)
+    {
+        operandStack.append(displayPi)
+        display_operation.text = display_operation.text! + "π"
+    }
     
     @IBAction func appendDigit(sender: UIButton)
     {
@@ -41,6 +48,7 @@ class ViewController: UIViewController
             }
             
             display_operation.text = digit
+            
             userIsInTheMiddleOfTypingANumber = true
         }
     }
@@ -65,8 +73,6 @@ class ViewController: UIViewController
         case"cos": performOperation { cos($0) }
         default: break
         }
-        
-        display_operation.text = ""
     }
     
     func performOperation(operation: (Double, Double) -> Double)
@@ -106,7 +112,6 @@ class ViewController: UIViewController
             
             if displayString == "π"
             {
-                let displayPi = M_PI
                 displayString = "\(displayPi)"
             }
             
