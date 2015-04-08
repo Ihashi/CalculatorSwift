@@ -10,36 +10,38 @@ import UIKit
 
 class ViewController: UIViewController
 {
+    @IBOutlet weak var display_operation: UILabel!
     @IBOutlet weak var display: UILabel!
     @IBOutlet weak var dot: UIButton!
+    @IBOutlet weak var pi: UIButton!
+    
+    @IBAction func clear(sender: UIButton)
+    {
+        display.text = ""
+        display_operation.text = ""
+        operandStack.removeAll()
+    }
     
     var userIsInTheMiddleOfTypingANumber = false
-    var test = 0
-    
     
     @IBAction func appendDigit(sender: UIButton)
     {
-        let digit = sender.currentTitle!
+        var digit = sender.currentTitle!
         
-        if userIsInTheMiddleOfTypingANumber {
-            display.text = display.text! + digit
-            
-            if(digit == ".")
-            {
-                dot.enabled = false
-            }
+        if userIsInTheMiddleOfTypingANumber
+        {
+            dot.enabled = false
+            display_operation.text = display_operation.text! + digit
         }
         else
         {
-            display.text = digit
-            userIsInTheMiddleOfTypingANumber = true
-            
-            if(dot.enabled == false)
+            if digit == "."
             {
-                test++
-                dot.enabled = true
-                println("\(test)")
+                dot.enabled = false
             }
+            
+            display_operation.text = digit
+            userIsInTheMiddleOfTypingANumber = true
         }
     }
     
@@ -59,8 +61,12 @@ class ViewController: UIViewController
         case"+": performOperation { $0 + $1 }
         case"−": performOperation { $1 - $0 }
         case"√": performOperation { sqrt($0) }
+        case"sin": performOperation { sin($0) }
+        case"cos": performOperation { cos($0) }
         default: break
         }
+        
+        display_operation.text = ""
     }
     
     func performOperation(operation: (Double, Double) -> Double)
@@ -85,8 +91,10 @@ class ViewController: UIViewController
     
     @IBAction func enter()
     {
+        dot.enabled = true
         userIsInTheMiddleOfTypingANumber = false
         operandStack.append(displayValue)
+        display.text = "\(displayValue)"
         println("operandStack = \(operandStack)")
     }
     
@@ -94,14 +102,20 @@ class ViewController: UIViewController
     {
         get
         {
-            var displayString = display.text!
+            var displayString = display_operation.text!
+            
+            if displayString == "π"
+            {
+                var displayPi = M_PI
+                displayString = "\(displayPi)"
+            }
+            
             return (displayString as NSString).doubleValue
         }
         set
         {
-            display.text = "\(newValue)"
+            display_operation.text = "\(newValue)"
             userIsInTheMiddleOfTypingANumber = false
         }
     }
-    
 }
