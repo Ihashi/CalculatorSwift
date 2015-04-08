@@ -106,7 +106,7 @@ class ViewController: UIViewController
             
             if displayString == "π"
             {
-                var displayPi = M_PI
+                let displayPi = M_PI
                 displayString = "\(displayPi)"
             }
             
