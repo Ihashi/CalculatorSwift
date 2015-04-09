@@ -38,6 +38,7 @@
 		641EBDFF1AD2CB6F00DE6F9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		641EBE001AD2CB6F00DE6F9E /* CalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTests.swift; sourceTree = "<group>"; };
 		642DFC7F1AD55E63009CC601 /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
+		F959FD1D1AD695AA00084FE9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +62,7 @@
 		641EBDDC1AD2CB6E00DE6F9E = {
 			isa = PBXGroup;
 			children = (
+				F959FD1D1AD695AA00084FE9 /* .gitignore */,
 				641EBDE71AD2CB6E00DE6F9E /* Calculator */,
 				641EBDFD1AD2CB6F00DE6F9E /* CalculatorTests */,
 				641EBDE61AD2CB6E00DE6F9E /* Products */,
