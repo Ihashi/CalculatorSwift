@@ -24,9 +24,12 @@ class ViewController: UIViewController
     
     @IBAction func pi(sender: UIButton)
     {
-        display.text = display.text! + "π"
-        brain.pushOperand(M_PI)
-        dot.enabled = false
+        if userIsInTheMiddleOfTypingANumber
+        {
+            enter()
+        }
+        display.text = "\(M_PI)"
+        enter()
     }
     
     @IBAction func clear(sender: UIButton)
