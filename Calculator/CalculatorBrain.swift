@@ -44,13 +44,13 @@ class CalculatorBrain
             knownOps[op.description] = op
         }
         
-        knownOps["×"] = Op.BinaryOperation("×", *)
-        knownOps["÷"] = Op.BinaryOperation("÷") { $1 / $0 }
-        knownOps["+"] = Op.BinaryOperation("+", +)
-        knownOps["−"] = Op.BinaryOperation("−") { $1 - $0 }
-        knownOps["√"] = Op.UnaryOperation("√", sqrt)
-        knownOps["sin"] = Op.UnaryOperation("sin", sin)
-        knownOps["cos"] = Op.UnaryOperation("cos", cos)
+        learnOp(Op.BinaryOperation("×", *))
+        learnOp(Op.BinaryOperation("÷") { $1 / $0 })
+        learnOp(Op.BinaryOperation("+", +))
+        learnOp(Op.BinaryOperation("−") { $1 - $0 })
+        learnOp(Op.UnaryOperation("√", sqrt))
+        learnOp(Op.UnaryOperation("sin", sin))
+        learnOp(Op.UnaryOperation("cos", cos))
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op])
@@ -75,15 +75,12 @@ class CalculatorBrain
                 
             case .BinaryOperation(_, let operation):
                 let op1Evaluation = evaluate(remainingOps)
+                let op2Evaluation = evaluate(op1Evaluation.remainingOps)
                 
-                if let operand1 = op1Evaluation.result
+                if let operand1 = op1Evaluation.result,
+                    operand2 = op2Evaluation.result
                 {
-                    let op2Evaluation = evaluate(op1Evaluation.remainingOps)
-                    
-                    if let operand2 = op2Evaluation.result
-                    {
-                        return(operation(operand1, operand2), op2Evaluation.remainingOps)
-                    }
+                    return(operation(operand1, operand2), op2Evaluation.remainingOps)
                 }
             }
         }
@@ -110,8 +107,7 @@ class CalculatorBrain
         {
             opStack.append(operation)
         }
-        
-        if symbol == "C"
+        else if symbol == "C"
         {
             opStack.removeAll()
         }

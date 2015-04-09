@@ -39,22 +39,17 @@ class ViewController: UIViewController
     {
         let digit = sender.currentTitle!
         
+        if digit == "."
+        {
+            dot.enabled = false
+        }
+        
         if userIsInTheMiddleOfTypingANumber
         {
-            if digit == "."
-            {
-                dot.enabled = false
-            }
-            
             display.text = display.text! + digit
         }
         else
         {
-            if digit == "."
-            {
-                dot.enabled = false
-            }
-            
             display.text = digit
             userIsInTheMiddleOfTypingANumber = true
         }
@@ -99,7 +94,7 @@ class ViewController: UIViewController
     {
         get
         {
-            var displayString = display.text!
+            let displayString = display.text!
             return (displayString as NSString).doubleValue
         }
         set
