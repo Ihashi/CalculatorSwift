@@ -10,21 +10,51 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet var display: UILabel!
+    @IBOutlet weak var dot: UIButton!
     
     var userIsInTheMiddleOfTypingANumber = false
     
     var brain = CalculatorBrain()
 
+    override func viewDidLoad()
+    {
+        display.text = ""
+    }
+    
+    @IBAction func pi(sender: UIButton)
+    {
+        display.text = display.text! + "π"
+        brain.pushOperand(M_PI)
+        dot.enabled = false
+    }
+    
+    @IBAction func clear(sender: UIButton)
+    {
+        display.text = ""
+        brain.performOperation("C")
+    }
+    
     @IBAction func appendDigit(sender: UIButton)
     {
         let digit = sender.currentTitle!
         
-        if userIsInTheMiddleOfTypingANumber {
+        if userIsInTheMiddleOfTypingANumber
+        {
+            if digit == "."
+            {
+                dot.enabled = false
+            }
+            
             display.text = display.text! + digit
         }
         else
         {
+            if digit == "."
+            {
+                dot.enabled = false
+            }
+            
             display.text = digit
             userIsInTheMiddleOfTypingANumber = true
         }
@@ -52,6 +82,7 @@ class ViewController: UIViewController
     
     @IBAction func enter()
     {
+        dot.enabled = true
         userIsInTheMiddleOfTypingANumber = false
         
         if let result = brain.pushOperand(displayValue)
@@ -77,5 +108,4 @@ class ViewController: UIViewController
             userIsInTheMiddleOfTypingANumber = false
         }
     }
-    
 }

@@ -49,6 +49,8 @@ class CalculatorBrain
         knownOps["+"] = Op.BinaryOperation("+", +)
         knownOps["−"] = Op.BinaryOperation("−") { $1 - $0 }
         knownOps["√"] = Op.UnaryOperation("√", sqrt)
+        knownOps["sin"] = Op.UnaryOperation("sin", sin)
+        knownOps["cos"] = Op.UnaryOperation("cos", cos)
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op])
@@ -107,6 +109,11 @@ class CalculatorBrain
         if let operation = knownOps[symbol]
         {
             opStack.append(operation)
+        }
+        
+        if symbol == "C"
+        {
+            opStack.removeAll()
         }
         
         return evaluate()
